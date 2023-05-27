@@ -68,7 +68,26 @@ class BusinessViewController: UIViewController {
     }
   }
   
+  private func startLoaderView() {
+    let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+
+    let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+    loadingIndicator.hidesWhenStopped = true
+    loadingIndicator.style = .medium
+    loadingIndicator.startAnimating()
+
+    alert.view.addSubview(loadingIndicator)
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @objc func endRefreshing() {
+    DispatchQueue.main.async {
+      self.dismiss(animated: false)
+    }
+  }
+  
   private func fetchTopStories() {
+    startLoaderView()
     APICaller.shared.getTopBusiness { [weak self] result in
       
       switch result {
@@ -81,11 +100,13 @@ class BusinessViewController: UIViewController {
             imageURL: URL(string: $0.urlToImage ?? ""))
         })
         DispatchQueue.main.async {
+          self?.endRefreshing()
           self?.tableView.reloadData()
         }
         
       case .failure(let error):
         print(error)
+        self?.endRefreshing()
       }
     }
   }
