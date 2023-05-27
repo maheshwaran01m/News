@@ -11,11 +11,11 @@ final class APICaller {
   
   static let shared = APICaller()
   
-  let topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?q=apple&from=2023-05-26&to=2023-05-26&sortBy=popularity&apiKey=bc18c720aaf04b3887d907ad9fd2e797")
+  let topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?q=apple&from=2023-05-26&to=2023-05-26&sortBy=popularity&apiKey=-----EnterAPIKey-----")
   
-  let businessURL = URL(string: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=bc18c720aaf04b3887d907ad9fd2e797")
+  let businessURL = URL(string: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=-----EnterAPIKey-----")
   
-  let searchUrlString = "https://newsapi.org/v2/everything?q=apple&from=2023-05-26&to=2023-05-26&sortBy=popularity&apiKey=bc18c720aaf04b3887d907ad9fd2e797&q="
+  let searchUrlString = "https://newsapi.org/v2/everything?q=apple&from=2023-05-26&to=2023-05-26&sortBy=popularity&apiKey=-----EnterAPIKey-----&q="
   
   private init(){ }
   

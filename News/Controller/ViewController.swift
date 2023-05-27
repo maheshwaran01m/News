@@ -61,14 +61,33 @@ class ViewController: UIViewController {
   private func createSearchBar() {
     navigationItem.searchController = searchVC
     searchVC.searchBar.delegate = self
-    searchVC.searchBar.placeholder = "Search Trending"
+    searchVC.searchBar.placeholder = "Search"
     searchVC.searchBar.returnKeyType = .search
     if #available(iOS 16.0, *) {
       navigationItem.preferredSearchBarPlacement = .stacked
     }
   }
   
-  private func fetchTopStories() {
+  private func startLoaderView() {
+    let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+
+    let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+    loadingIndicator.hidesWhenStopped = true
+    loadingIndicator.style = .medium
+    loadingIndicator.startAnimating()
+
+    alert.view.addSubview(loadingIndicator)
+    present(alert, animated: true, completion: nil)
+  }
+  
+  @objc func endRefreshing() {
+    DispatchQueue.main.async {
+      self.dismiss(animated: false)
+    }
+  }
+  
+  @objc private func fetchTopStories() {
+    startLoaderView()
     APICaller.shared.getTopStories{ [weak self] result in
       
       switch result {
@@ -81,10 +100,12 @@ class ViewController: UIViewController {
             imageURL: URL(string: $0.urlToImage ?? ""))
         })
         DispatchQueue.main.async {
+          self?.endRefreshing()
           self?.tableView.reloadData()
         }
         
       case .failure(let error):
+        self?.endRefreshing()
         print(error)
       }
     }
