@@ -22,7 +22,6 @@ final class APICaller {
   // MARK: - Get News Details
   
   public func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void) {
-    
     guard let url = topHeadlinesURL else { return }
     
     let task = URLSession.shared.dataTask(with: url) { data, _ , error in
@@ -43,7 +42,6 @@ final class APICaller {
   }
   
   public func getTopBusiness(completion: @escaping (Result<[Article], Error>) -> Void){
-    
     guard let url = businessURL else { return }
     
     let task = URLSession.shared.dataTask(with: url) { data, _ , error in
@@ -63,9 +61,7 @@ final class APICaller {
     task.resume()
   }
   
-  
   public func search(with query: String,completion: @escaping (Result<[Article], Error>) -> Void){
-    
     guard !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
     
     let urlstring = searchUrlString + query
