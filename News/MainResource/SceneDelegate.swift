@@ -20,7 +20,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window = UIWindow(windowScene: scene)
     let navigationVC = UINavigationController(rootViewController: ViewController())
     navigationVC.navigationBar.prefersLargeTitles = true
-    self.window?.rootViewController = navigationVC
+    navigationVC.tabBarItem = UITabBarItem(title: "Trends", image: UIImage(systemName: "newspaper"), tag: 0)
+    
+    let businessVC = UINavigationController(rootViewController: BusinessViewController())
+    businessVC.tabBarItem = UITabBarItem(title: "Business", image: UIImage(systemName: "person"), tag: 1)
+    businessVC.navigationBar.prefersLargeTitles = true
+    
+    let tabController = UITabBarController()
+    tabController.selectedIndex = 0
+    tabController.viewControllers = [navigationVC, businessVC]
+    self.window?.rootViewController = tabController
     self.window?.makeKeyAndVisible()
   }
 
@@ -51,7 +60,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // Use this method to save data, release shared resources, and store enough scene-specific state information
     // to restore the scene back to its current state.
   }
-
-
 }
 
