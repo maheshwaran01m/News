@@ -21,5 +21,5 @@ iPad:
 
 **Example:**
 
-https://github.com/maheshwaran01m/News/assets/102943217/ee49cc10-9b6e-46e6-bc83-4a87df449901
+https://github.com/maheshwaran01m/News/assets/102943217/ab24a903-b83a-46ca-aad6-2f8b517f0323
 
