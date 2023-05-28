@@ -18,6 +18,7 @@ class ViewController: UIViewController {
   }(UITableView())
   
   private let searchVC = UISearchController(searchResultsController: nil)
+  private var loaderView: UIAlertController?
   
   // MARK: - Private Property
   
@@ -70,19 +71,18 @@ class ViewController: UIViewController {
   
   private func startLoaderView() {
     let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-
     let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
     loadingIndicator.hidesWhenStopped = true
     loadingIndicator.style = .medium
     loadingIndicator.startAnimating()
-
+    self.loaderView = alert
     alert.view.addSubview(loadingIndicator)
     present(alert, animated: true, completion: nil)
   }
   
   @objc func endRefreshing() {
     DispatchQueue.main.async {
-      self.dismiss(animated: false)
+      self.loaderView?.dismiss(animated: false)
     }
   }
   
@@ -149,8 +149,7 @@ extension ViewController: UISearchBarDelegate {
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     guard let text = searchBar.text, !text.isEmpty  else { return }
-    
-    APICaller.shared.search(with: text){ [weak self] result in
+    APICaller.shared.search(with: text,isFromNews: true) { [weak self] result in
       switch result {
       case.success(let articles):
         self?.articles = articles
@@ -160,12 +159,19 @@ extension ViewController: UISearchBarDelegate {
                                      imageURL: URL(string: $0.urlToImage ?? ""))
         })
         DispatchQueue.main.async {
+          self?.endRefreshing()
           self?.tableView.reloadData()
-          self?.searchVC.dismiss(animated: true, completion: nil )
+          self?.searchVC.dismiss(animated: true, completion: nil)
         }
       case .failure(let error):
         print(error)
+        self?.endRefreshing()
       }
     }
+  }
+  
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    searchBar.showsCancelButton = false
+    fetchTopStories()
   }
 }
