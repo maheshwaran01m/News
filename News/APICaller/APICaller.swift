@@ -11,18 +11,16 @@ final class APICaller {
   
   static let shared = APICaller()
   
-  let topHeadlinesURL = URL(string: "https://newsapi.org/v2/everything?q=apple&from=2023-05-26&to=2023-05-26&sortBy=popularity&apiKey=-----EnterAPIKey-----")
+  let topHeadlinesURL = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=---EnterAPIKey-----"
   
-  let businessURL = URL(string: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=-----EnterAPIKey-----")
-  
-  let searchUrlString = "https://newsapi.org/v2/everything?q=apple&from=2023-05-26&to=2023-05-26&sortBy=popularity&apiKey=-----EnterAPIKey-----&q="
+  let businessURL = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=---EnterAPIKey-----"
   
   private init(){ }
   
   // MARK: - Get News Details
   
   public func getTopStories(completion: @escaping (Result<[Article], Error>) -> Void) {
-    guard let url = topHeadlinesURL else { return }
+    guard let url = URL(string: topHeadlinesURL) else { return }
     
     let task = URLSession.shared.dataTask(with: url) { data, _ , error in
       
@@ -42,7 +40,7 @@ final class APICaller {
   }
   
   public func getTopBusiness(completion: @escaping (Result<[Article], Error>) -> Void){
-    guard let url = businessURL else { return }
+    guard let url = URL(string: businessURL) else { return }
     
     let task = URLSession.shared.dataTask(with: url) { data, _ , error in
       
@@ -61,12 +59,12 @@ final class APICaller {
     task.resume()
   }
   
-  public func search(with query: String,completion: @escaping (Result<[Article], Error>) -> Void){
+  public func search(with query: String, isFromNews: Bool = false, completion: @escaping (Result<[Article], Error>) -> Void){
     guard !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
     
-    let urlstring = searchUrlString + query
+    let urlstring = isFromNews ? topHeadlinesURL : businessURL
     
-    guard let url = URL(string: urlstring) else { return }
+    guard let url = URL(string: urlstring + "&q=\(query)") else { return }
     
     let task = URLSession.shared.dataTask(with: url) { data, _ , error in
       
