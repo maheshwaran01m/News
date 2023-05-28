@@ -84,7 +84,7 @@ class NewsTableViewCell: UITableViewCell {
   func configure(with viewModel: NewsTableViewCellViewModel) {
     newsTitleLabel.text = viewModel.title
     subtitleLabel.text = viewModel.subtitle
-    
+    newsImageView.image = UIImage(systemName: "photo.circle")
     if let data = viewModel.imageData {
       newsImageView.image = UIImage(data: data)
     } else if let url = viewModel.imageURL {
