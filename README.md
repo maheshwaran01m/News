@@ -12,14 +12,13 @@ Images
 
 iPhone:
 
-<img width="475" alt="Screenshot 2023-05-27 at 19 31 12" src="https://github.com/maheshwaran01m/News/assets/102943217/0ce21445-198d-42a6-ab2e-6524b7f4c894">
+<img src="https://github.com/maheshwaran01m/News/assets/102943217/eb964887-f66b-434a-9e77-358f1f57c756" width=30% >
 
 iPad:
 
-<img width="797" alt="Screenshot 2023-05-27 at 19 31 58" src="https://github.com/maheshwaran01m/News/assets/102943217/7efc6f3d-873c-49e6-ae3a-1765bd9351cf">
-
+<img src="https://github.com/maheshwaran01m/News/assets/102943217/def670b0-6892-4349-bc46-0766e5f7d351" width=30% >
 
 **Example:**
 
-https://github.com/maheshwaran01m/News/assets/102943217/ab24a903-b83a-46ca-aad6-2f8b517f0323
+https://github.com/maheshwaran01m/News/assets/102943217/e71de384-c06b-4cff-840b-e47fc1712611
 
